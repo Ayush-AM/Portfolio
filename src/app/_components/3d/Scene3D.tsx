@@ -3,6 +3,7 @@
 import { useRef, useMemo, type JSX } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, Environment, PerspectiveCamera } from '@react-three/drei'
+import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import * as THREE from 'three'
 
 interface Scene3DProps {
@@ -12,45 +13,39 @@ interface Scene3DProps {
 
 export function Scene3D({ scrollProgress, currentSection }: Scene3DProps): JSX.Element {
   const { camera } = useThree()
-  // Using any type for OrbitControls ref as the proper type is complex
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-  const controlsRef = useRef<any>(null)
+  const controlsRef = useRef<OrbitControlsImpl>(null)
   const groupRef = useRef<THREE.Group>(null)
 
-  // Dynamic lighting based on scroll
   const lightIntensity = useMemo(() => {
     return 0.5 + scrollProgress * 0.5
   }, [scrollProgress])
 
-  // Camera animation based on current section
   useFrame((state, delta) => {
     if (groupRef.current) {
-      // Rotate the entire scene slowly
       groupRef.current.rotation.y += delta * 0.1
     }
 
-    // Animate camera position based on section
     const targetPosition = new THREE.Vector3()
     const targetLookAt = new THREE.Vector3()
 
     switch (currentSection) {
-      case 0: // Hero
+      case 0:
         targetPosition.set(0, 0, 10)
         targetLookAt.set(0, 0, 0)
         break
-      case 1: // About
+      case 1:
         targetPosition.set(5, 2, 8)
         targetLookAt.set(0, 0, 0)
         break
-      case 2: // Projects
+      case 2:
         targetPosition.set(-3, 1, 12)
         targetLookAt.set(0, 0, 0)
         break
-      case 3: // Skills
+      case 3:
         targetPosition.set(2, -1, 9)
         targetLookAt.set(0, 0, 0)
         break
-      case 4: // Contact
+      case 4:
         targetPosition.set(0, 3, 15)
         targetLookAt.set(0, 0, 0)
         break
@@ -59,24 +54,18 @@ export function Scene3D({ scrollProgress, currentSection }: Scene3DProps): JSX.E
         targetLookAt.set(0, 0, 0)
     }
 
-    // Smooth camera movement
     camera.position.lerp(targetPosition, delta * 0.5)
-    
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+
     if (controlsRef.current) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       controlsRef.current.target.lerp(targetLookAt, delta * 0.5)
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       controlsRef.current.update()
     }
   })
 
   return (
     <>
-      {/* Camera */}
       <PerspectiveCamera makeDefault position={[0, 0, 10]} fov={75} />
-      
-      {/* Controls */}
+
       <OrbitControls
         ref={controlsRef}
         enablePan={false}
@@ -88,7 +77,6 @@ export function Scene3D({ scrollProgress, currentSection }: Scene3DProps): JSX.E
         autoRotateSpeed={0.5}
       />
 
-      {/* Lighting */}
       <ambientLight intensity={lightIntensity * 0.4} />
       <directionalLight
         position={[10, 10, 5]}
@@ -99,12 +87,9 @@ export function Scene3D({ scrollProgress, currentSection }: Scene3DProps): JSX.E
       <pointLight position={[-10, -10, -5]} intensity={lightIntensity * 0.3} color="#ff6b6b" />
       <pointLight position={[10, -10, -5]} intensity={lightIntensity * 0.3} color="#4ecdc4" />
 
-      {/* Environment */}
       <Environment preset="night" />
 
-      {/* Main 3D Group */}
       <group ref={groupRef}>
-        {/* Central Geometric Structure */}
         <mesh position={[0, 0, 0]} rotation={[0, 0, 0]}>
           <icosahedronGeometry args={[2, 1]} />
           <meshStandardMaterial
@@ -116,7 +101,6 @@ export function Scene3D({ scrollProgress, currentSection }: Scene3DProps): JSX.E
           />
         </mesh>
 
-        {/* Orbiting Elements */}
         {Array.from({ length: 8 }).map((_, i) => {
           const angle = (i / 8) * Math.PI * 2
           const radius = 4 + Math.sin(scrollProgress * Math.PI * 2) * 0.5
@@ -138,7 +122,6 @@ export function Scene3D({ scrollProgress, currentSection }: Scene3DProps): JSX.E
           )
         })}
 
-        {/* Floating Rings */}
         {Array.from({ length: 3 }).map((_, i) => (
           <mesh
             key={`ring-${i}`}
