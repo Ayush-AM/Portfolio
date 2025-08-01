@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#1a1a2e"/>
+  <g transform="translate(400,300)">
+    <rect x="-150" y="-100" width="300" height="200" rx="10" ry="10" fill="#16213e" stroke="#0f3460" stroke-width="4"/>
+    <rect x="-130" y="-80" width="260" height="40" rx="5" ry="5" fill="#0f3460"/>
+    <circle cx="-110" cy="-60" r="10" fill="#e94560"/>
+    <rect x="-90" y="-65" width="200" height="10" rx="5" ry="5" fill="#e94560"/>
+    <rect x="-130" y="-30" width="80" height="80" rx="5" ry="5" fill="#0f3460"/>
+    <rect x="-40" y="-30" width="80" height="80" rx="5" ry="5" fill="#0f3460"/>
+    <rect x="50" y="-30" width="80" height="80" rx="5" ry="5" fill="#0f3460"/>
+    <rect x="-130" y="60" width="260" height="20" rx="5" ry="5" fill="#e94560"/>
+    <text x="0" y="100" font-family="Arial" font-size="24" fill="white" text-anchor="middle">E-Commerce Platform</text>
+    <text x="0" y="130" font-family="Arial" font-size="18" fill="#aaaaaa" text-anchor="middle">Next.js + Node.js</text>
+  </g>
+</svg>
