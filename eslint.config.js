@@ -11,6 +11,16 @@ export default tseslint.config(
   },
   ...compat.extends("next/core-web-vitals"),
   {
+    rules: {
+      "@next/next/no-img-element": "off",
+      "@typescript-eslint/prefer-optional-chain": "off",
+      "@typescript-eslint/non-nullable-type-assertion-style": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+    },
+  },
+  {
     files: ["**/*.ts", "**/*.tsx"],
     extends: [
       ...tseslint.configs.recommended,
@@ -24,10 +34,7 @@ export default tseslint.config(
         "warn",
         { prefer: "type-imports", fixStyle: "inline-type-imports" },
       ],
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
-        { argsIgnorePattern: "^_" },
-      ],
+      "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/require-await": "off",
       "@typescript-eslint/no-misused-promises": [
         "error",

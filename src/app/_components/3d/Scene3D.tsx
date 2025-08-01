@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, type JSX } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, Environment, PerspectiveCamera } from '@react-three/drei'
 import * as THREE from 'three'
@@ -12,7 +12,9 @@ interface Scene3DProps {
 
 export function Scene3D({ scrollProgress, currentSection }: Scene3DProps): JSX.Element {
   const { camera } = useThree()
-  const controlsRef = useRef<any>()
+  // Using any type for OrbitControls ref as the proper type is complex
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+  const controlsRef = useRef<any>(null)
   const groupRef = useRef<THREE.Group>(null)
 
   // Dynamic lighting based on scroll
@@ -60,8 +62,11 @@ export function Scene3D({ scrollProgress, currentSection }: Scene3DProps): JSX.E
     // Smooth camera movement
     camera.position.lerp(targetPosition, delta * 0.5)
     
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     if (controlsRef.current) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       controlsRef.current.target.lerp(targetLookAt, delta * 0.5)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       controlsRef.current.update()
     }
   })

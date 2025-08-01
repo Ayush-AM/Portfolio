@@ -1,6 +1,6 @@
 'use client'
-
-import { useRef, useMemo } from 'react'
+  
+import { useRef, useMemo, type JSX } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
@@ -40,23 +40,29 @@ export function ParticleField({ count }: ParticleFieldProps): JSX.Element {
       const time = state.clock.getElapsedTime()
       
       // Animate particles
-      const positions = meshRef.current.geometry.attributes.position.array as Float32Array
-      
-      for (let i = 0; i < count; i++) {
-        const i3 = i * 3
+      if (meshRef.current?.geometry?.attributes.position) {
+        const positions = meshRef.current.geometry.attributes.position.array as Float32Array
         
-        // Floating motion
-        positions[i3 + 1] += Math.sin(time * 0.5 + i * 0.1) * 0.01
-        
-        // Wrap around
-        if (positions[i3 + 1] > 25) positions[i3 + 1] = -25
-        if (positions[i3 + 1] < -25) positions[i3 + 1] = 25
+        for (let i = 0; i < count; i++) {
+          const i3 = i * 3
+          
+          // Floating motion
+          const posY = positions[i3 + 1]!
+          positions[i3 + 1] = posY + Math.sin(time * 0.5 + i * 0.1) * 0.01
+          
+          // Wrap around
+          const currentPosY = positions[i3 + 1]!
+          if (currentPosY > 25) positions[i3 + 1] = -25
+          if (currentPosY < -25) positions[i3 + 1] = 25
       }
       
       meshRef.current.geometry.attributes.position.needsUpdate = true
+      }
       
       // Rotate the entire particle field
-      meshRef.current.rotation.y = time * 0.05
+      if (meshRef.current) {
+        meshRef.current.rotation.y = time * 0.05
+      }
     }
   })
 
@@ -65,20 +71,20 @@ export function ParticleField({ count }: ParticleFieldProps): JSX.Element {
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
+          args={[particles.positions, 3]}
           count={count}
-          array={particles.positions}
           itemSize={3}
         />
         <bufferAttribute
           attach="attributes-color"
+          args={[particles.colors, 3]}
           count={count}
-          array={particles.colors}
           itemSize={3}
         />
         <bufferAttribute
           attach="attributes-size"
+          args={[particles.sizes, 1]}
           count={count}
-          array={particles.sizes}
           itemSize={1}
         />
       </bufferGeometry>

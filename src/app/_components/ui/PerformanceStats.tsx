@@ -22,8 +22,15 @@ export function PerformanceStats() {
         lastTime = now;
         
         // Get memory usage if available
-        if (window.performance && (performance as any).memory) {
-          const memoryInfo = (performance as any).memory;
+        if (window.performance && 'memory' in performance) {
+          // Define a type for the memory property
+          interface PerformanceMemory {
+            usedJSHeapSize: number;
+            totalJSHeapSize: number;
+            jsHeapSizeLimit: number;
+          }
+          
+          const memoryInfo = (performance as unknown as { memory: PerformanceMemory }).memory;
           setMemory(Math.round(memoryInfo.usedJSHeapSize / (1024 * 1024)));
         }
       }
