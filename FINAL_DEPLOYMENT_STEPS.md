@@ -79,16 +79,22 @@ If your build fails, check these common issues:
 
 1. **Missing Environment Variables**
    - Verify all required environment variables are set in Vercel
+   - We've updated the `src/env.js` file to make Discord authentication variables optional in production
 
-2. **Node.js Version**
+2. **Environment Validation Error**
+   - If you see errors about required environment variables, the fix has been applied by:
+     - Making AUTH_DISCORD_ID and AUTH_DISCORD_SECRET optional in src/env.js
+     - Setting SKIP_ENV_VALIDATION=true in vercel.json
+
+3. **Node.js Version**
    - Ensure Vercel is using Node.js 18.17 or later
    - In Vercel Dashboard, go to Settings → General → Node.js Version
 
-3. **Package Compatibility**
+4. **Package Compatibility**
    - Your project uses Next.js 15.4.2, which requires React 19
    - Ensure all dependencies are compatible
 
-4. **Three.js and Client-Side Rendering**
+5. **Three.js and Client-Side Rendering**
    - Your project uses Three.js which requires client-side rendering
    - The `dynamic` import with `ssr: false` in your code is correct
 

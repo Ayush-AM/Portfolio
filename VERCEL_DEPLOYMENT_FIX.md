@@ -90,20 +90,32 @@ The build process is starting but not completing. This is likely due to missing 
 
    This will provide more detailed error messages if there are issues.
 
-3. **Simplify Authentication Requirements**
+3. **Simplify Authentication Requirements (IMPLEMENTED)**
 
-   If you're not actively using authentication in your portfolio, you can modify `src/env.js` to make the auth variables optional during production:
+   We have already modified your `src/env.js` file to make the Discord auth variables optional during production:
 
    ```javascript
    server: {
      AUTH_SECRET:
        process.env.NODE_ENV === "production"
+         ? z.string()
+         : z.string().optional(),
+     AUTH_DISCORD_ID: 
+       process.env.NODE_ENV === "production"
          ? z.string().optional()
          : z.string().optional(),
-     AUTH_DISCORD_ID: z.string().optional(),
-     AUTH_DISCORD_SECRET: z.string().optional(),
+     AUTH_DISCORD_SECRET: 
+       process.env.NODE_ENV === "production"
+         ? z.string().optional()
+         : z.string().optional(),
      // ...
    }
+   ```
+   
+   This change specifically addresses the error messages you received:
+   ```
+   path: [ 'AUTH_DISCORD_ID' ], message: 'Required'
+   path: [ 'AUTH_DISCORD_SECRET' ], message: 'Required'
    ```
 
 ## Next Steps After Successful Deployment
