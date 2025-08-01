@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, type JSX } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from 'next-themes'
 
 interface Skill {
@@ -82,6 +82,14 @@ export function SkillsSection(): JSX.Element {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
   }
+  
+  // Animation for when items are removed/added
+  const skillCardAnimation = {
+    initial: { scale: 0.8, opacity: 0 },
+    animate: { scale: 1, opacity: 1 },
+    exit: { scale: 0.8, opacity: 0 },
+    transition: { duration: 0.3 }
+  }
 
   return (
     <section id="skills" className="relative min-h-screen px-6 py-20">
@@ -128,28 +136,33 @@ export function SkillsSection(): JSX.Element {
             >
               {category.label}
             </button>
-          ))}
+            ))}
         </motion.div>
 
         {/* Skills Grid */}
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+          layout
           variants={container}
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
+          animate="show"
         >
-          {filteredSkills.map((skill) => (
-            <motion.div
-              key={skill.name}
-              className={`relative overflow-hidden rounded-2xl backdrop-blur-md border p-6 transition-all duration-300 hover:scale-105 ${
-                isDark
-                  ? 'bg-white/5 border-white/10 hover:bg-white/10'
-                  : 'bg-black/5 border-black/10 hover:bg-black/10'
-              }`}
-              variants={item}
-              whileHover={{ scale: 1.05 }}
-            >
+          <AnimatePresence mode="popLayout">
+            {filteredSkills.map((skill) => (
+              <motion.div
+                key={skill.name}
+                className={`relative overflow-hidden rounded-2xl backdrop-blur-md border p-6 transition-all duration-300 hover:scale-105 ${
+                  isDark
+                    ? 'bg-white/5 border-white/10 hover:bg-white/10'
+                    : 'bg-black/5 border-black/10 hover:bg-black/10'
+                }`}
+                layout
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={skillCardAnimation}
+                whileHover={{ scale: 1.05 }}
+              >
               <div className="flex items-center gap-4 mb-4">
                 <div className="text-4xl">{skill.icon}</div>
                 <div>
@@ -166,9 +179,8 @@ export function SkillsSection(): JSX.Element {
                 <motion.div
                   className="h-full bg-gradient-to-r from-cyan-500 to-purple-600"
                   initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
+                  animate={{ width: `${skill.level}%` }}
                   transition={{ duration: 1, delay: 0.2 }}
-                  viewport={{ once: true }}
                 />
               </div>
               <div className="mt-2 flex justify-between">
@@ -180,6 +192,7 @@ export function SkillsSection(): JSX.Element {
               </div>
             </motion.div>
           ))}
+          </AnimatePresence>
         </motion.div>
 
         {/* Skill Stats */}
