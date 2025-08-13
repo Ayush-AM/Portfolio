@@ -1,13 +1,15 @@
 'use client'
 
-import { useState, type FormEvent, type JSX } from 'react'
+import { useState, useRef, type FormEvent, type JSX } from 'react'
 import { motion } from 'framer-motion'
 import { useTheme } from 'next-themes'
 import { Mail, Phone, MapPin, Github, Linkedin, Send, Loader2 } from 'lucide-react'
+import emailjs from '@emailjs/browser'
+import { env } from '../../../env.js'
 
 interface FormData {
-  name: string
-  email: string
+  from_name: string
+  reply_to: string
   subject: string
   message: string
 }
@@ -17,8 +19,8 @@ export function ContactSection(): JSX.Element {
   const isDark = theme === 'dark'
   
   const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
+    from_name: '',
+    reply_to: '',
     subject: '',
     message: ''
   })
@@ -26,6 +28,8 @@ export function ContactSection(): JSX.Element {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [submitSuccess, setSubmitSuccess] = useState<boolean>(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+
+  const formRef = useRef<HTMLFormElement>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -38,15 +42,49 @@ export function ContactSection(): JSX.Element {
     setSubmitError(null)
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500))
+      // Check if EmailJS environment variables are set
+      if (
+        !env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ||
+        env.NEXT_PUBLIC_EMAILJS_SERVICE_ID === "your_real_service_id" ||
+        !env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ||
+        env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID === "your_real_template_id" ||
+        !env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ||
+        env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY === "your_real_public_key"
+      ) {
+        // In development, simulate success if env vars aren't set
+        if (process.env.NODE_ENV === 'development') {
+          console.log('Development mode: Simulating email success')
+          await new Promise(resolve => setTimeout(resolve, 1500))
+          setFormData({ from_name: '', reply_to: '', subject: '', message: '' })
+          setSubmitSuccess(true)
+          setTimeout(() => setSubmitSuccess(false), 5000)
+          return
+        } else {
+          throw new Error('EmailJS configuration is missing or using placeholder values')
+        }
+      }
       
-      // Reset form and show success message
-      setFormData({ name: '', email: '', subject: '', message: '' })
-      setSubmitSuccess(true)
-      setTimeout(() => setSubmitSuccess(false), 5000)
+      // Send email using EmailJS
+      console.log('Attempting to send email with EmailJS')
+      const result = await emailjs.sendForm(
+        env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+        env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+        formRef.current!,
+        env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+      )
+      
+      console.log('EmailJS response:', result)
+      if (result.status === 200) {
+        // Reset form and show success message
+        setFormData({ from_name: '', reply_to: '', subject: '', message: '' })
+        setSubmitSuccess(true)
+        setTimeout(() => setSubmitSuccess(false), 5000)
+      } else {
+        throw new Error(`Failed to send email: Status ${result.status}`)
+      }
     } catch (error) {
-      setSubmitError('Something went wrong. Please try again.')
+      console.error('EmailJS error:', error)
+      setSubmitError('Something went wrong. Please check the console for details and ensure EmailJS is properly configured.')
     } finally {
       setIsSubmitting(false)
     }
@@ -90,7 +128,7 @@ export function ContactSection(): JSX.Element {
               {'Send Me a Message'}
             </h3>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label 
                   htmlFor="name" 
@@ -101,8 +139,8 @@ export function ContactSection(): JSX.Element {
                 <input
                   type="text"
                   id="name"
-                  name="name"
-                  value={formData.name}
+                  name="from_name"
+                  value={formData.from_name}
                   onChange={handleChange}
                   required
                   className={`w-full px-4 py-3 rounded-lg outline-none transition-all duration-300 ${
@@ -124,8 +162,8 @@ export function ContactSection(): JSX.Element {
                 <input
                   type="email"
                   id="email"
-                  name="email"
-                  value={formData.email}
+                  name="reply_to"
+                  value={formData.reply_to}
                   onChange={handleChange}
                   required
                   className={`w-full px-4 py-3 rounded-lg outline-none transition-all duration-300 ${
@@ -186,7 +224,7 @@ export function ContactSection(): JSX.Element {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-white font-medium transition-all duration-300 ${
+                className={` cursor-pointer w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-white font-medium transition-all duration-300 ${
                   isSubmitting 
                     ? 'bg-gray-500 cursor-not-allowed' 
                     : 'bg-gradient-to-r from-cyan-500 to-purple-600 hover:shadow-lg'

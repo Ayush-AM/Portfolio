@@ -8,7 +8,7 @@ interface Skill {
   name: string
   icon: string
   level: number
-  category: 'frontend' | 'backend' | 'design' | 'tools' | '3d'
+  category: 'frontend' | 'backend' | 'design' | 'tools' | '3d' | 'language'
 }
 
 export function SkillsSection(): JSX.Element {
@@ -17,40 +17,47 @@ export function SkillsSection(): JSX.Element {
   const [activeCategory, setActiveCategory] = useState<string>('all')
 
   const skills: Skill[] = [
+
     // Frontend
-    { name: 'React', icon: '⚛️', level: 95, category: 'frontend' },
-    { name: 'TypeScript', icon: '🔷', level: 90, category: 'frontend' },
-    { name: 'Next.js', icon: '▲', level: 85, category: 'frontend' },
-    { name: 'Tailwind CSS', icon: '🌊', level: 90, category: 'frontend' },
-    { name: 'Framer Motion', icon: '🔄', level: 80, category: 'frontend' },
-    { name: 'HTML/CSS', icon: '🌐', level: 95, category: 'frontend' },
+    { name: 'React', icon: '⚛️', level: 80, category: 'frontend' },
+    { name: 'TypeScript', icon: '🔷', level: 70, category: 'frontend' },
+    { name: 'Next.js', icon: '▲', level: 75, category: 'frontend' },
+    { name: 'Tailwind CSS', icon: '🌊', level: 80, category: 'frontend' },
+    { name: 'Framer Motion', icon: '🔄', level: 70, category: 'frontend' },
+    { name: 'HTML/CSS', icon: '🌐', level: 90, category: 'frontend' },
     
     // Backend
-    { name: 'Node.js', icon: '🟢', level: 85, category: 'backend' },
-    { name: 'Express', icon: '🚂', level: 80, category: 'backend' },
-    { name: 'MongoDB', icon: '🍃', level: 75, category: 'backend' },
+    { name: 'Node.js', icon: '🟢', level: 70, category: 'backend' },
+    { name: 'Express', icon: '🚂', level: 70, category: 'backend' },
+    { name: 'MongoDB', icon: '🍃', level: 70, category: 'backend' },
     { name: 'REST API', icon: '🔁', level: 60, category: 'backend' },
     // { name: 'PostgreSQL', icon: '🐘', level: 70, category: 'backend' },
     { name: 'SQL', icon: '🗄️', level: 50, category: 'backend' },
-    { name: 'Firebase', icon: '🔥', level: 80, category: 'backend' },
+    { name: 'Firebase', icon: '🔥', level: 70, category: 'backend' },
+
+        //languages
+    { name: 'JavaScript', icon: '🟡', level: 75, category: 'language' },
+    { name: 'C++', icon: '🟣', level: 80, category: 'language' },
+    { name: 'Python', icon: '🐍', level: 75, category: 'language' },
+    { name: 'Java', icon: '🟤', level: 75, category: 'language' },
     
     // 3D & Graphics
-    { name: 'Three.js', icon: '🧊', level: 85, category: '3d' },
+    { name: 'Three.js', icon: '🧊', level: 65, category: '3d' },
     // { name: 'WebGL', icon: '🌈', level: 75, category: '3d' },
     // { name: 'Blender', icon: '🎭', level: 60, category: '3d' },
-    { name: 'React Three Fiber', icon: '🔮', level: 80, category: '3d' },
+    { name: 'React Three Fiber', icon: '🔮', level: 50, category: '3d' },
     // { name: 'GLSL Shaders', icon: '✨', level: 65, category: '3d' },
     
     // Design
-    { name: 'Figma', icon: '🎨', level: 85, category: 'design' },
+    { name: 'Figma', icon: '🎨', level: 70, category: 'design' },
     // { name: 'Adobe XD', icon: '📱', level: 75, category: 'design' },
     // { name: 'Photoshop', icon: '🖼️', level: 70, category: 'design' },
-    { name: 'UI/UX Design', icon: '🎯', level: 80, category: 'design' },
+    { name: 'UI/UX Design', icon: '🎯', level: 75, category: 'design' },
     
     // Tools & Others
-    { name: 'Git', icon: '🔄', level: 90, category: 'tools' },
-    { name: 'Docker', icon: '🐳', level: 75, category: 'tools' },
-    { name: 'AWS', icon: '☁️', level: 70, category: 'tools' },
+    { name: 'Git', icon: '🔄', level: 70, category: 'tools' },
+    { name: 'Docker', icon: '🐳', level: 70, category: 'tools' },
+    { name: 'AWS', icon: '☁️', level: 60, category: 'tools' },
     // { name: 'Jest', icon: '🃏', level: 80, category: 'tools' },
     // { name: 'Webpack', icon: '📦', level: 75, category: 'tools' },
   ]
@@ -62,6 +69,7 @@ export function SkillsSection(): JSX.Element {
     { id: '3d', label: '3D & Graphics' },
     { id: 'design', label: 'Design' },
     { id: 'tools', label: 'Tools & DevOps' },
+    { id: 'language', label: 'Programming Languages' },
   ]
 
   const filteredSkills = activeCategory === 'all'
