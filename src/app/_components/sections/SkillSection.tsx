@@ -19,45 +19,45 @@ export function SkillsSection(): JSX.Element {
   const skills: Skill[] = [
 
     // Frontend
-    { name: 'React', icon: '⚛️', level: 80, category: 'frontend' },
-    { name: 'TypeScript', icon: '🔷', level: 70, category: 'frontend' },
-    { name: 'Next.js', icon: '▲', level: 75, category: 'frontend' },
+    { name: 'React', icon: '⚛️', level: 50, category: 'frontend' },
+    // { name: 'TypeScript', icon: '🔷', level: 70, category: 'frontend' },
+    { name: 'Next.js', icon: '▲', level: 30, category: 'frontend' },
     { name: 'Tailwind CSS', icon: '🌊', level: 80, category: 'frontend' },
     { name: 'Framer Motion', icon: '🔄', level: 70, category: 'frontend' },
     { name: 'HTML/CSS', icon: '🌐', level: 90, category: 'frontend' },
     
     // Backend
-    { name: 'Node.js', icon: '🟢', level: 70, category: 'backend' },
-    { name: 'Express', icon: '🚂', level: 70, category: 'backend' },
-    { name: 'MongoDB', icon: '🍃', level: 70, category: 'backend' },
-    { name: 'REST API', icon: '🔁', level: 60, category: 'backend' },
+    { name: 'Node.js', icon: '🟢', level: 50, category: 'backend' },
+    { name: 'Express', icon: '🚂', level: 50, category: 'backend' },
+    { name: 'MongoDB', icon: '🍃', level: 50, category: 'backend' },
+    // { name: 'REST API', icon: '🔁', level: 60, category: 'backend' },
     // { name: 'PostgreSQL', icon: '🐘', level: 70, category: 'backend' },
     { name: 'SQL', icon: '🗄️', level: 50, category: 'backend' },
-    { name: 'Firebase', icon: '🔥', level: 70, category: 'backend' },
+    // { name: 'Firebase', icon: '🔥', level: 70, category: 'backend' },
 
         //languages
-    { name: 'JavaScript', icon: '🟡', level: 75, category: 'language' },
+    { name: 'JavaScript', icon: '🟡', level: 65, category: 'language' },
     { name: 'C++', icon: '🟣', level: 80, category: 'language' },
     { name: 'Python', icon: '🐍', level: 75, category: 'language' },
     { name: 'Java', icon: '🟤', level: 75, category: 'language' },
     
     // 3D & Graphics
-    { name: 'Three.js', icon: '🧊', level: 65, category: '3d' },
+    { name: 'Three.js', icon: '🧊', level: 40, category: '3d' },
     // { name: 'WebGL', icon: '🌈', level: 75, category: '3d' },
     // { name: 'Blender', icon: '🎭', level: 60, category: '3d' },
-    { name: 'React Three Fiber', icon: '🔮', level: 50, category: '3d' },
+    { name: 'React Three Fiber', icon: '🔮', level: 40, category: '3d' },
     // { name: 'GLSL Shaders', icon: '✨', level: 65, category: '3d' },
     
     // Design
     { name: 'Figma', icon: '🎨', level: 70, category: 'design' },
     // { name: 'Adobe XD', icon: '📱', level: 75, category: 'design' },
     // { name: 'Photoshop', icon: '🖼️', level: 70, category: 'design' },
-    { name: 'UI/UX Design', icon: '🎯', level: 75, category: 'design' },
+    { name: 'UI/UX Design', icon: '🎯', level: 70, category: 'design' },
     
     // Tools & Others
     { name: 'Git', icon: '🔄', level: 70, category: 'tools' },
-    { name: 'Docker', icon: '🐳', level: 70, category: 'tools' },
-    { name: 'AWS', icon: '☁️', level: 60, category: 'tools' },
+    { name: 'Docker', icon: '🐳', level: 50, category: 'tools' },
+    // { name: 'AWS', icon: '☁️', level: 60, category: 'tools' },
     // { name: 'Jest', icon: '🃏', level: 80, category: 'tools' },
     // { name: 'Webpack', icon: '📦', level: 75, category: 'tools' },
   ]

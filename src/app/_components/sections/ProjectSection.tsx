@@ -14,7 +14,7 @@ interface Project {
   image: string;
   demoUrl: string;
   githubUrl: string;
-  category: "web" | "3d" | "mobile" | "ai" | "IoT";
+  category: "web" | "3d" | "mobile" | "ai" | "iot";
   featured: boolean;
 }
 
@@ -39,20 +39,20 @@ export function ProjectsSection(): JSX.Element {
       category: "3d",
       featured: true,
     },
-    {
-      id: 2,
-      title: "E-Commerce Platform",
-      description:
-        "Full-stack e-commerce solution with real-time inventory and payment processing.",
-      longDescription:
-        "A comprehensive e-commerce platform built with Next.js and Node.js. Features include real-time inventory management, secure payment processing, user authentication, and an admin dashboard. Deployed on AWS with CI/CD pipeline.",
-      technologies: ["Next.js", "Node.js", "PostgreSQL", "Stripe", "AWS"],
-      image: "/images/projects/ecommerce.svg",
-      demoUrl: "#",
-      githubUrl: "#",
-      category: "web",
-      featured: true,
-    },
+    // {
+    //   id: 2,
+    //   title: "E-Commerce Platform",
+    //   description:
+    //     "Full-stack e-commerce solution with real-time inventory and payment processing.",
+    //   longDescription:
+    //     "A comprehensive e-commerce platform built with Next.js and Node.js. Features include real-time inventory management, secure payment processing, user authentication, and an admin dashboard. Deployed on AWS with CI/CD pipeline.",
+    //   technologies: ["Next.js", "Node.js", "PostgreSQL", "Stripe", "AWS"],
+    //   image: "/images/projects/ecommerce.svg",
+    //   demoUrl: "#",
+    //   githubUrl: "#",
+    //   category: "web",
+    //   featured: true,
+    // },
     {
       id: 3,
       title: "AI Reply for WhatsApp",
@@ -68,39 +68,39 @@ export function ProjectsSection(): JSX.Element {
         "Pyperclip",
       ],
       image: "/images/projects/ai-chat.svg",
-      demoUrl: "#",
-      githubUrl: "#",
+      demoUrl: "https://github.com/Ayush-AM/Gemini-Whatsapp-Chatbot",
+      githubUrl: "https://github.com/Ayush-AM/Gemini-Whatsapp-Chatbot",
       category: "ai",
       featured: false,
     },
-    {
-      id: 4,
-      title: "Mobile Fitness App",
-      description:
-        "Cross-platform fitness tracking app with social features and gamification.",
-      longDescription:
-        "A comprehensive fitness tracking application built with React Native. Features include workout planning, progress tracking, social challenges, and integration with wearable devices. Uses Firebase for real-time data synchronization.",
-      technologies: ["React Native", "Firebase", "Redux", "Expo", "TypeScript"],
-      image: "/images/projects/fitness-app.svg",
-      demoUrl: "#",
-      githubUrl: "#",
-      category: "mobile",
-      featured: false,
-    },
-    {
-      id: 5,
-      title: "VR Data Visualization",
-      description:
-        "Immersive VR experience for exploring complex datasets in 3D space.",
-      longDescription:
-        "A virtual reality application for data visualization built with Unity and C#. Allows users to explore complex datasets in an immersive 3D environment with hand tracking and voice commands. Supports multiple VR headsets.",
-      technologies: ["Unity", "C#", "WebXR", "Three.js", "A-Frame"],
-      image: "/images/projects/vr-data.svg",
-      demoUrl: "#",
-      githubUrl: "#",
-      category: "3d",
-      featured: true,
-    },
+    // {
+    //   id: 4,
+    //   title: "Mobile Fitness App",
+    //   description:
+    //     "Cross-platform fitness tracking app with social features and gamification.",
+    //   longDescription:
+    //     "A comprehensive fitness tracking application built with React Native. Features include workout planning, progress tracking, social challenges, and integration with wearable devices. Uses Firebase for real-time data synchronization.",
+    //   technologies: ["React Native", "Firebase", "Redux", "Expo", "TypeScript"],
+    //   image: "/images/projects/fitness-app.svg",
+    //   demoUrl: "#",
+    //   githubUrl: "#",
+    //   category: "mobile",
+    //   featured: false,
+    // },
+    // {
+    //   id: 5,
+    //   title: "VR Data Visualization",
+    //   description:
+    //     "Immersive VR experience for exploring complex datasets in 3D space.",
+    //   longDescription:
+    //     "A virtual reality application for data visualization built with Unity and C#. Allows users to explore complex datasets in an immersive 3D environment with hand tracking and voice commands. Supports multiple VR headsets.",
+    //   technologies: ["Unity", "C#", "WebXR", "Three.js", "A-Frame"],
+    //   image: "/images/projects/vr-data.svg",
+    //   demoUrl: "#",
+    //   githubUrl: "#",
+    //   category: "3d",
+    //   featured: true,
+    // },
     // {
     //   id: 6,
     //   title: "Blockchain DApp",
@@ -132,17 +132,18 @@ export function ProjectsSection(): JSX.Element {
       image: "/images/projects/Drone.jpg",
       demoUrl: "#",
       githubUrl: "#",
-      category: "IoT",
+      category: "iot",
       featured: false,
     },
   ];
 
   const categories = [
     { id: "all", label: "All Projects" },
-    { id: "web", label: "Web Apps" },
+    // { id: "web", label: "Web Apps" },
     { id: "3d", label: "3D & VR" },
-    { id: "mobile", label: "Mobile" },
+    // { id: "mobile", label: "Mobile" },
     { id: "ai", label: "AI & ML" },
+    { id: "iot", label: "IOT" },
   ];
 
   const filteredProjects =
