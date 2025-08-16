@@ -4,21 +4,9 @@ import { z } from "zod";
 export const env = createEnv({
   // Server-side environment variables
   server: {
-    AUTH_SECRET:
-      process.env.NODE_ENV === "production"
-        ? z.string()
-        : z.string().optional(),
-
-    AUTH_DISCORD_ID:
-      process.env.NODE_ENV === "production"
-        ? z.string()
-        : z.string().optional(),
-
-    AUTH_DISCORD_SECRET:
-      process.env.NODE_ENV === "production"
-        ? z.string()
-        : z.string().optional(),
-
+    AUTH_SECRET: z.string().optional(),
+    AUTH_DISCORD_ID: z.string().optional(),
+    AUTH_DISCORD_SECRET: z.string().optional(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -26,20 +14,9 @@ export const env = createEnv({
 
   // Client-side environment variables (must start with NEXT_PUBLIC_)
   client: {
-    NEXT_PUBLIC_EMAILJS_SERVICE_ID:
-      process.env.NODE_ENV === "production"
-        ? z.string()
-        : z.string().optional(),
-
-    NEXT_PUBLIC_EMAILJS_TEMPLATE_ID:
-      process.env.NODE_ENV === "production"
-        ? z.string()
-        : z.string().optional(),
-
-    NEXT_PUBLIC_EMAILJS_PUBLIC_KEY:
-      process.env.NODE_ENV === "production"
-        ? z.string()
-        : z.string().optional(),
+    NEXT_PUBLIC_EMAILJS_SERVICE_ID: z.string().optional(),
+    NEXT_PUBLIC_EMAILJS_TEMPLATE_ID: z.string().optional(),
+    NEXT_PUBLIC_EMAILJS_PUBLIC_KEY: z.string().optional(),
   },
 
   // Runtime environment binding
