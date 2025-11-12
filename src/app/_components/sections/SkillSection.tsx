@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, type JSX } from 'react'
+import { useState, useEffect, useCallback, type JSX } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from 'next-themes'
 import { ChevronLeft, ChevronRight, Award, Calendar, ExternalLink } from 'lucide-react'
@@ -404,9 +404,9 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
     // }
   ]
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % certifications.length)
-  }
+  }, [certifications.length])
 
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev - 1 + certifications.length) % certifications.length)
@@ -417,7 +417,7 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
     
     const interval = setInterval(nextSlide, 4000)
     return () => clearInterval(interval)
-  }, [isAutoPlaying])
+  }, [isAutoPlaying, nextSlide])
 
   const visibleCertifications = (): Certification[] => {
     const result: Certification[] = []

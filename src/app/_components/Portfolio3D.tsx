@@ -35,10 +35,12 @@ export function Portfolio3D(): JSX.Element {
         const threshold = viewportHeight * 0.3 // 30% of viewport
 
         for (let i = 0; i < sections.length; i++) {
-          const element = document.getElementById(sections[i]!)
+          const sectionId = sections[i]
+          if (!sectionId) continue
+          const element = document.getElementById(sectionId)
           if (element) {
             const rect = element.getBoundingClientRect()
-            const containerRect = containerRef.current!.getBoundingClientRect()
+            const containerRect = containerRef.current.getBoundingClientRect()
             const elementTop = rect.top - containerRect.top
             
             // Section is active if it's within the threshold from the top

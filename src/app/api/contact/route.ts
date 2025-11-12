@@ -1,9 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, subject, message } = await request.json()
+    const body = await request.json() as { name: string; email: string; subject: string; message: string }
+    const { name, email, subject, message } = body
 
     console.log('Contact form submission:', { name, email, subject, message })
 
@@ -38,13 +39,13 @@ export async function POST(request: NextRequest) {
         <p><strong>Message:</strong></p>
         <p>${message}</p>
       `
-    }
+    } as const
 
     await transporter.sendMail(mailOptions)
     console.log('Email sent successfully')
 
     return NextResponse.json({ success: true })
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Email error:', error)
     return NextResponse.json({ 
       error: 'Failed to send email',
