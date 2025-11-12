@@ -17,7 +17,7 @@ export function HeroSection() {
 
   return (
     <section
-      id="home"
+      id="hero"
       className="relative flex min-h-screen items-center justify-center px-6"
     >
       {/* Glassmorphism Container */}
@@ -92,7 +92,9 @@ export function HeroSection() {
           </motion.a>
 
           <motion.a
-            href="#contact"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=arpitmahajan856@gmail.com"
+            target="_blank"
+            rel="noopener noreferrer"
             className={`flex h-12 w-12 items-center justify-center rounded-full ${isDark ? "bg-white/10 hover:bg-white/20" : "bg-black/10 hover:bg-black/20"} transition-colors`}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}

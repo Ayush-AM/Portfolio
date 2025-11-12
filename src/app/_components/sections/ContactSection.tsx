@@ -1,15 +1,13 @@
 'use client'
 
-import { useState, useRef, type FormEvent, type JSX } from 'react'
+import { useState, type FormEvent, type JSX } from 'react'
 import { motion } from 'framer-motion'
 import { useTheme } from 'next-themes'
 import { Mail, Phone, MapPin, Github, Linkedin, Send, Loader2 } from 'lucide-react'
-import emailjs from '@emailjs/browser'
-import { env } from '../../../env.js'
 
 interface FormData {
-  from_name: string
-  reply_to: string
+  name: string
+  email: string
   subject: string
   message: string
 }
@@ -19,8 +17,8 @@ export function ContactSection(): JSX.Element {
   const isDark = theme === 'dark'
   
   const [formData, setFormData] = useState<FormData>({
-    from_name: '',
-    reply_to: '',
+    name: '',
+    email: '',
     subject: '',
     message: ''
   })
@@ -28,8 +26,6 @@ export function ContactSection(): JSX.Element {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [submitSuccess, setSubmitSuccess] = useState<boolean>(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
-
-  const formRef = useRef<HTMLFormElement>(null)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -42,49 +38,24 @@ export function ContactSection(): JSX.Element {
     setSubmitError(null)
     
     try {
-      // Check if EmailJS environment variables are set
-      if (
-        !env.NEXT_PUBLIC_EMAILJS_SERVICE_ID ||
-        env.NEXT_PUBLIC_EMAILJS_SERVICE_ID === "your_real_service_id" ||
-        !env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ||
-        env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID === "your_real_template_id" ||
-        !env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY ||
-        env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY === "your_real_public_key"
-      ) {
-        // In development, simulate success if env vars aren't set
-        if (process.env.NODE_ENV === 'development') {
-          console.log('Development mode: Simulating email success')
-          await new Promise(resolve => setTimeout(resolve, 1500))
-          setFormData({ from_name: '', reply_to: '', subject: '', message: '' })
-          setSubmitSuccess(true)
-          setTimeout(() => setSubmitSuccess(false), 5000)
-          return
-        } else {
-          throw new Error('EmailJS configuration is missing or using placeholder values')
-        }
-      }
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
       
-      // Send email using EmailJS
-      console.log('Attempting to send email with EmailJS')
-      const result = await emailjs.sendForm(
-        env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-        env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-        formRef.current!,
-        env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
-      )
-      
-      console.log('EmailJS response:', result)
-      if (result.status === 200) {
-        // Reset form and show success message
-        setFormData({ from_name: '', reply_to: '', subject: '', message: '' })
+      if (response.ok) {
+        setFormData({ name: '', email: '', subject: '', message: '' })
         setSubmitSuccess(true)
         setTimeout(() => setSubmitSuccess(false), 5000)
       } else {
-        throw new Error(`Failed to send email: Status ${result.status}`)
+        throw new Error('Failed to send message')
       }
     } catch (error) {
-      console.error('EmailJS error:', error)
-      setSubmitError('Something went wrong. Please check the console for details and ensure EmailJS is properly configured.')
+      console.error('Form submission error:', error)
+      setSubmitError('Failed to send message. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
@@ -128,7 +99,7 @@ export function ContactSection(): JSX.Element {
               {'Send Me a Message'}
             </h3>
 
-            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label 
                   htmlFor="name" 
@@ -139,8 +110,8 @@ export function ContactSection(): JSX.Element {
                 <input
                   type="text"
                   id="name"
-                  name="from_name"
-                  value={formData.from_name}
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
                   required
                   className={`w-full px-4 py-3 rounded-lg outline-none transition-all duration-300 ${
@@ -162,8 +133,8 @@ export function ContactSection(): JSX.Element {
                 <input
                   type="email"
                   id="email"
-                  name="reply_to"
-                  value={formData.reply_to}
+                  name="email"
+                  value={formData.email}
                   onChange={handleChange}
                   required
                   className={`w-full px-4 py-3 rounded-lg outline-none transition-all duration-300 ${
@@ -293,7 +264,9 @@ export function ContactSection(): JSX.Element {
                   <div>
                     <h4 className={`text-lg font-medium ${isDark ? 'text-white' : 'text-black'}`}>{'Email'}</h4>
                     <a 
-                      href="mailto:arpitmahajan856@gmail.com" 
+                      href="https://mail.google.com/mail/?view=cm&fs=1&to=arpitmahajan856@gmail.com" 
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={`text-sm hover:underline ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
                     >
                       {'arpitmahajan856@gmail.com'}
@@ -372,7 +345,9 @@ export function ContactSection(): JSX.Element {
                 </motion.a>
                 
                 <motion.a
-                  href="mailto:arpitmahajan856@gmail.com"
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=arpitmahajan856@gmail.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`p-4 rounded-full transition-all duration-300 ${
                     isDark 
                       ? 'bg-white/10 text-white hover:bg-white/20' 

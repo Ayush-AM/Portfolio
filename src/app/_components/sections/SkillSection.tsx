@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, type JSX } from 'react'
+import { useState, useEffect, type JSX } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from 'next-themes'
+import { ChevronLeft, ChevronRight, Award, Calendar, ExternalLink } from 'lucide-react'
 
 interface Skill {
   name: string
@@ -20,7 +21,7 @@ export function SkillsSection(): JSX.Element {
 
     // Frontend
     { name: 'React', icon: '⚛️', level: 50, category: 'frontend' },
-    // { name: 'TypeScript', icon: '🔷', level: 70, category: 'frontend' },
+    { name: 'TypeScript', icon: '🔷', level: 65, category: 'frontend' },
     { name: 'Next.js', icon: '▲', level: 30, category: 'frontend' },
     { name: 'Tailwind CSS', icon: '🌊', level: 80, category: 'frontend' },
     { name: 'Framer Motion', icon: '🔄', level: 70, category: 'frontend' },
@@ -30,9 +31,9 @@ export function SkillsSection(): JSX.Element {
     { name: 'Node.js', icon: '🟢', level: 50, category: 'backend' },
     { name: 'Express', icon: '🚂', level: 50, category: 'backend' },
     { name: 'MongoDB', icon: '🍃', level: 50, category: 'backend' },
-    // { name: 'REST API', icon: '🔁', level: 60, category: 'backend' },
+    { name: 'REST API', icon: '🔁', level: 60, category: 'backend' },
     // { name: 'PostgreSQL', icon: '🐘', level: 70, category: 'backend' },
-    { name: 'SQL', icon: '🗄️', level: 50, category: 'backend' },
+    { name: 'SQL', icon: '🗄️', level: 70, category: 'backend' },
     // { name: 'Firebase', icon: '🔥', level: 70, category: 'backend' },
 
         //languages
@@ -43,7 +44,7 @@ export function SkillsSection(): JSX.Element {
     
     // 3D & Graphics
     { name: 'Three.js', icon: '🧊', level: 40, category: '3d' },
-    // { name: 'WebGL', icon: '🌈', level: 75, category: '3d' },
+    { name: 'WebGL', icon: '🌈', level: 65, category: '3d' },
     // { name: 'Blender', icon: '🎭', level: 60, category: '3d' },
     { name: 'React Three Fiber', icon: '🔮', level: 40, category: '3d' },
     // { name: 'GLSL Shaders', icon: '✨', level: 65, category: '3d' },
@@ -236,6 +237,24 @@ export function SkillsSection(): JSX.Element {
             isDark={isDark} 
           />
         </motion.div>
+
+        {/* Certifications Section */}
+        <motion.div
+          className="mt-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          viewport={{ once: true }}
+        >
+          <h3 className={`text-3xl md:text-4xl font-bold text-center mb-12 ${isDark ? 'text-white' : 'text-black'}`}>
+            {'Certifications & '}
+            <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+              {'Achievements'}
+            </span>
+          </h3>
+          
+          <CertificationSlider isDark={isDark} />
+        </motion.div>
       </div>
     </section>
   )
@@ -275,4 +294,239 @@ function getCategoryLabel(category: string): string {
     default:
       return category
   }
+}
+
+interface Certification {
+  id: number
+  title: string
+  issuer: string
+  date: string
+  description: string
+  credentialUrl?: string
+  icon: string
+  color: string
+}
+
+function CertificationSlider({ isDark }: { isDark: boolean }) {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+
+  const certifications: Certification[] = [
+    {
+      id: 1,
+      title: "Oracle Certified AI Professional",
+      issuer: "Oracle",
+      date: "2025",
+      description: "Oracle Cloud Infrastructure 2025 Certified Generative AI Professional! ",
+      credentialUrl: "/images/certifications/oracle-ai-certification.jpg",
+      icon: "🤖",
+      color: "from-red-600 to-orange-500"
+    },
+    {
+      id: 4,
+      title: "Generative AI Professional Badge",
+      issuer: "Oracle",
+      date: "2025",
+      description: "Professional badge in Oracle Cloud Infrastructure Generative AI.",
+      credentialUrl: "/images/certifications/generative-ai-badge.jpg",
+      icon: "✨",
+      color: "from-violet-600 to-purple-500"
+    },
+    {
+      id: 2,
+      title: "Full Stack Open - GraphQL",
+      issuer: "University of Helsinki",
+      date: "2024",
+      description: "Advanced GraphQL development including queries, mutations, subscriptions, and Apollo Client integration.",
+      credentialUrl: "/images/certifications/fullstack-graphql.jpg",
+      icon: "🔍",
+      color: "from-pink-500 to-rose-500"
+    },
+    {
+      id: 5,
+      title: "Full Stack Open - TypeScript",
+      issuer: "University of Helsinki",
+      date: "2024",
+      description: "TypeScript for full-stack development, type safety, and advanced TypeScript patterns.",
+      credentialUrl: "/images/certifications/fullstack-typescript.jpg",
+      icon: "🔷",
+      color: "from-blue-600 to-indigo-500"
+    },
+    {
+      id: 6,
+      title: "Full Stack Open - 7 ECTS Credits",
+      issuer: "University of Helsinki",
+      date: "2024",
+      description: "Completed 7 ECTS credits covering React, Node.js, Express, MongoDB, and modern web development practices.",
+      credentialUrl: "/images/certifications/fullstack-7ects.jpg",
+      icon: "🎓",
+      color: "from-green-500 to-emerald-500"
+    },
+    {
+      id: 7,
+      title: "Full Stack Open - React Native",
+      issuer: "University of Helsinki",
+      date: "2024",
+      description: "Mobile app development with React Native, Expo, and cross-platform development techniques.",
+      credentialUrl: "/images/certifications/fullstack-react-native.jpg",
+      icon: "📱",
+      color: "from-cyan-500 to-teal-500"
+    },
+    {
+      id: 3,
+      title: "Ethical Hacking Workshop",
+      issuer: "Physics Wallah",
+      date: "2024",
+      description: "Comprehensive workshop on ethical hacking techniques, penetration testing, and cybersecurity fundamentals.",
+      credentialUrl: "/images/certifications/ethical-hacking-certificate.jpg",
+      icon: "🛡️",
+      color: "from-purple-600 to-pink-500"
+    },
+    // {
+    //   id: 4,
+    //   title: "AWS Cloud Practitioner",
+    //   issuer: "Amazon Web Services",
+    //   date: "2023",
+    //   description: "Foundational understanding of AWS Cloud services, architecture, and best practices.",
+    //   credentialUrl: "#",
+    //   icon: "☁️",
+    //   color: "from-orange-500 to-yellow-500"
+    // },
+    // {
+    //   id: 5,
+    //   title: "Google Data Analytics Certificate",
+    //   issuer: "Google",
+    //   date: "2023",
+    //   description: "Professional certificate in data analysis, visualization, and business intelligence.",
+    //   credentialUrl: "#",
+    //   icon: "📊",
+    //   color: "from-green-500 to-teal-500"
+    // }
+  ]
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % certifications.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + certifications.length) % certifications.length)
+  }
+
+  useEffect(() => {
+    if (!isAutoPlaying) return
+    
+    const interval = setInterval(nextSlide, 4000)
+    return () => clearInterval(interval)
+  }, [isAutoPlaying])
+
+  const visibleCertifications = (): Certification[] => {
+    const result: Certification[] = []
+    for (let i = 0; i < 3; i++) {
+      const index = (currentIndex + i) % certifications.length
+      const cert = certifications[index]
+      if (cert) {
+        result.push(cert)
+      }
+    }
+    return result
+  }
+
+  return (
+    <div 
+      className="relative"
+      onMouseEnter={() => setIsAutoPlaying(false)}
+      onMouseLeave={() => setIsAutoPlaying(true)}
+    >
+      <div className="flex items-center justify-center gap-6 overflow-hidden">
+        {/* Previous Button */}
+        <button
+          onClick={prevSlide}
+          className={`p-3 rounded-full transition-all duration-300 hover:scale-110 ${
+            isDark ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-black/10 hover:bg-black/20 text-black'
+          }`}
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+
+        {/* Certifications */}
+        <div className="flex gap-6 min-h-[300px]">
+          {visibleCertifications().map((cert, index) => (
+            <motion.div
+              key={cert.id}
+              className={`w-80 rounded-2xl backdrop-blur-md border p-6 transition-all duration-300 ${
+                isDark ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'
+              } ${index === 1 ? 'scale-105 shadow-2xl' : 'scale-95 opacity-75'}`}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: index === 1 ? 1 : 0.75, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="flex items-start gap-4 mb-4">
+                <div className={`text-4xl p-3 rounded-xl bg-gradient-to-r ${cert.color}`}>
+                  {cert.icon}
+                </div>
+                <div className="flex-1">
+                  <h4 className={`text-lg font-bold mb-1 ${isDark ? 'text-white' : 'text-black'}`}>
+                    {cert.title}
+                  </h4>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className={`text-sm font-medium ${isDark ? 'text-cyan-400' : 'text-blue-600'}`}>
+                      {cert.issuer}
+                    </span>
+                    <div className="flex items-center gap-1">
+                      <Calendar className="w-3 h-3" />
+                      <span className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                        {cert.date}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <p className={`text-sm mb-4 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                {cert.description}
+              </p>
+              
+              {cert.credentialUrl && (
+                <button
+                  onClick={() => cert.credentialUrl && window.open(cert.credentialUrl, '_blank')}
+                  className={`flex items-center gap-2 text-sm font-medium transition-colors ${
+                    isDark ? 'text-cyan-400 hover:text-cyan-300' : 'text-blue-600 hover:text-blue-500'
+                  }`}
+                >
+                  <Award className="w-4 h-4" />
+                  View
+                  <ExternalLink className="w-3 h-3" />
+                </button>
+              )}
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Next Button */}
+        <button
+          onClick={nextSlide}
+          className={`p-3 rounded-full transition-all duration-300 hover:scale-110 ${
+            isDark ? 'bg-white/10 hover:bg-white/20 text-white' : 'bg-black/10 hover:bg-black/20 text-black'
+          }`}
+        >
+          <ChevronRight className="w-6 h-6" />
+        </button>
+      </div>
+
+      {/* Dots Indicator */}
+      <div className="flex justify-center gap-2 mt-6">
+        {certifications.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              index === currentIndex
+                ? 'bg-gradient-to-r from-cyan-500 to-purple-600 w-8'
+                : isDark ? 'bg-white/30' : 'bg-black/30'
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  )
 }

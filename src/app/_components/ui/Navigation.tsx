@@ -22,10 +22,22 @@ export function Navigation({ currentSection, setCurrentSection }: NavigationProp
     { icon: Mail, label: 'Contact', href: '#contact', section: 4 },
   ]
 
-  const scrollToSection = (href: string): void => {
+  const scrollToSection = (href: string, sectionIndex: number): void => {
     const element = document.querySelector(href)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      // Find the scrollable container
+      const container = document.querySelector('.overflow-y-auto')
+      if (container) {
+        const containerRect = container.getBoundingClientRect()
+        const elementRect = element.getBoundingClientRect()
+        const scrollTop = container.scrollTop + elementRect.top - containerRect.top
+        
+        container.scrollTo({
+          top: scrollTop,
+          behavior: 'smooth'
+        })
+      }
+      setCurrentSection(sectionIndex)
     }
   }
 
@@ -48,8 +60,7 @@ export function Navigation({ currentSection, setCurrentSection }: NavigationProp
             <motion.button
               key={item.label}
               onClick={() => {
-                scrollToSection(item.href)
-                setCurrentSection(item.section) // ✅ manually update on click
+                scrollToSection(item.href, item.section)
               }}
               className={`relative w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group ${
                 isActive

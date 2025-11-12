@@ -28,16 +28,37 @@ export function Portfolio3D(): JSX.Element {
         const progress = scrollTop / scrollHeight
         setScrollY(progress)
 
-        // Calculate current section based on scroll position
-        const sectionHeight = scrollHeight / 5 // 5 sections
-        const section = Math.floor(scrollTop / sectionHeight)
-        setCurrentSection(Math.min(section, 4))
+        // Calculate current section based on actual section positions
+        const sections = ['hero', 'about', 'projects', 'skills', 'contact']
+        let currentSectionIndex = 0
+        const viewportHeight = containerRef.current.clientHeight
+        const threshold = viewportHeight * 0.3 // 30% of viewport
+
+        for (let i = 0; i < sections.length; i++) {
+          const element = document.getElementById(sections[i]!)
+          if (element) {
+            const rect = element.getBoundingClientRect()
+            const containerRect = containerRef.current!.getBoundingClientRect()
+            const elementTop = rect.top - containerRect.top
+            
+            // Section is active if it's within the threshold from the top
+            if (elementTop <= threshold && elementTop + rect.height > threshold) {
+              currentSectionIndex = i
+              break
+            } else if (elementTop <= threshold) {
+              currentSectionIndex = i
+            }
+          }
+        }
+        
+        setCurrentSection(currentSectionIndex)
       }
     }
 
     const container = containerRef.current
     if (container) {
       container.addEventListener('scroll', handleScroll)
+      handleScroll() // Initial call
       return () => container.removeEventListener('scroll', handleScroll)
     }
   }, [])

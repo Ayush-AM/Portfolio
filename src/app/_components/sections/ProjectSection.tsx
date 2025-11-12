@@ -282,7 +282,7 @@ export function ProjectsSection(): JSX.Element {
 
                   {/* Action Buttons */}
                   <div className="flex gap-2">
-                    <button
+                    {/* <button
                       className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-600 px-4 py-2 text-white transition-all duration-300 hover:shadow-lg"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -291,9 +291,9 @@ export function ProjectsSection(): JSX.Element {
                     >
                       <Play className="h-4 w-4" />
                       {"Demo"}
-                    </button>
+                    </button> */}
                     <button
-                      className={`rounded-lg border px-4 py-2 transition-all duration-300 ${
+                      className={`flex flex-1 items-center justify-center gap-2 rounded-lg border px-4 py-2 transition-all duration-300 ${
                         isDark
                           ? "border-white/20 text-white hover:bg-white/10"
                           : "border-black/20 text-black hover:bg-black/10"
@@ -304,6 +304,7 @@ export function ProjectsSection(): JSX.Element {
                       }}
                     >
                       <Github className="h-4 w-4" />
+                      {"GitHub"}
                     </button>
                   </div>
                 </div>
@@ -378,7 +379,7 @@ export function ProjectsSection(): JSX.Element {
                   </div>
 
                   <div className="flex gap-4">
-                    <button
+                    {/* <button
                       className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-600 px-6 py-3 text-white transition-all duration-300 hover:shadow-lg"
                       onClick={() =>
                         window.open(selectedProject.demoUrl, "_blank")
@@ -386,7 +387,7 @@ export function ProjectsSection(): JSX.Element {
                     >
                       <ExternalLink className="h-5 w-5" />
                       {"View Live Demo"}
-                    </button>
+                    </button> */}
                     <button
                       className={`flex items-center gap-2 rounded-lg border px-6 py-3 transition-all duration-300 ${
                         isDark
