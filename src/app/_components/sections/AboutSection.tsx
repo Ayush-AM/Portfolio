@@ -3,7 +3,7 @@
 import { useState, type JSX } from 'react'
 import { motion } from 'framer-motion'
 import { useTheme } from 'next-themes'
-import { Code, Cpu, Globe, Layers, Lightbulb, Smartphone } from 'lucide-react'
+import { Code, Cpu, Globe, Layers, Lightbulb, Smartphone, Award } from 'lucide-react'
 
 export function AboutSection(): JSX.Element {
   const { theme } = useTheme()
@@ -11,7 +11,7 @@ export function AboutSection(): JSX.Element {
 
   const stats = [
     { label: 'Years Experience', value: '2+' },
-    { label: 'Projects Completed', value: '10+' },
+    { label: 'Projects Completed', value: '20+' },
     // { label: 'Happy Clients', value: '20+' },
     // { label: 'Awards', value: '5' },
   ]
@@ -41,6 +41,11 @@ export function AboutSection(): JSX.Element {
       icon: Cpu,
       title: 'Performance Optimization',
       description: 'Optimizing applications for speed, efficiency, and smooth user experience.',
+    },
+    {
+      icon: Award,
+      title: 'Certified From',
+      description: 'Oracle AI Professional • Linux Foundation AI • University of Helsinki Full Stack • JP Morgan Simulation • Ethical Hacking',
     },
   ]
 

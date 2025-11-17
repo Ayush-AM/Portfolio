@@ -16,6 +16,7 @@ export function SkillsSection(): JSX.Element {
   const { theme } = useTheme()
   const isDark = theme === 'dark'
   const [activeCategory, setActiveCategory] = useState<string>('all')
+  const [isInView, setIsInView] = useState(false)
 
   const skills: Skill[] = [
 
@@ -34,7 +35,8 @@ export function SkillsSection(): JSX.Element {
     { name: 'REST API', icon: '🔁', level: 60, category: 'backend' },
     // { name: 'PostgreSQL', icon: '🐘', level: 70, category: 'backend' },
     { name: 'SQL', icon: '🗄️', level: 70, category: 'backend' },
-    // { name: 'Firebase', icon: '🔥', level: 70, category: 'backend' },
+    { name: 'GraphQL', icon: '🔍', level: 40, category: 'backend' },
+    { name: 'Django', icon: '🌿', level: 60, category: 'backend' },
 
         //languages
     { name: 'JavaScript', icon: '🟡', level: 65, category: 'language' },
@@ -154,7 +156,9 @@ export function SkillsSection(): JSX.Element {
           layout
           variants={container}
           initial="hidden"
-          animate="show"
+          whileInView="show"
+          viewport={{ once: true }}
+          onViewportEnter={() => setIsInView(true)}
         >
           <AnimatePresence mode="popLayout">
             {filteredSkills.map((skill) => (
@@ -186,10 +190,11 @@ export function SkillsSection(): JSX.Element {
 
               <div className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                 <motion.div
+                  key={`${skill.name}-${activeCategory}`}
                   className="h-full bg-gradient-to-r from-cyan-500 to-purple-600"
                   initial={{ width: 0 }}
-                  animate={{ width: `${skill.level}%` }}
-                  transition={{ duration: 1, delay: 0.2 }}
+                  animate={{ width: isInView ? `${skill.level}%` : 0 }}
+                  transition={{ duration: 1.5, delay: 0.3 }}
                 />
               </div>
               <div className="mt-2 flex justify-between">
@@ -310,6 +315,13 @@ interface Certification {
 function CertificationSlider({ isDark }: { isDark: boolean }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [isHovered, setIsHovered] = useState(false)
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
+  const [mouseStart, setMouseStart] = useState(0)
+  const [mouseEnd, setMouseEnd] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const [expandedCard, setExpandedCard] = useState<number | null>(null)
 
   const certifications: Certification[] = [
     {
@@ -336,7 +348,7 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
       id: 2,
       title: "Full Stack Open - GraphQL",
       issuer: "University of Helsinki",
-      date: "2024",
+      date: "2025",
       description: "Advanced GraphQL development including queries, mutations, subscriptions, and Apollo Client integration.",
       credentialUrl: "/images/certifications/fullstack-graphql.jpg",
       icon: "🔍",
@@ -346,7 +358,7 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
       id: 5,
       title: "Full Stack Open - TypeScript",
       issuer: "University of Helsinki",
-      date: "2024",
+      date: "2025",
       description: "TypeScript for full-stack development, type safety, and advanced TypeScript patterns.",
       credentialUrl: "/images/certifications/fullstack-typescript.jpg",
       icon: "🔷",
@@ -356,7 +368,7 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
       id: 6,
       title: "Full Stack Open - 7 ECTS Credits",
       issuer: "University of Helsinki",
-      date: "2024",
+      date: "2025",
       description: "Completed 7 ECTS credits covering React, Node.js, Express, MongoDB, and modern web development practices.",
       credentialUrl: "/images/certifications/fullstack-7ects.jpg",
       icon: "🎓",
@@ -366,7 +378,7 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
       id: 7,
       title: "Full Stack Open - React Native",
       issuer: "University of Helsinki",
-      date: "2024",
+      date: "2025",
       description: "Mobile app development with React Native, Expo, and cross-platform development techniques.",
       credentialUrl: "/images/certifications/fullstack-react-native.jpg",
       icon: "📱",
@@ -381,6 +393,26 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
       credentialUrl: "/images/certifications/ethical-hacking-certificate.jpg",
       icon: "🛡️",
       color: "from-purple-600 to-pink-500"
+    },
+    {
+      id: 8,
+      title: "Conversational AI Ensuring Compliance and Mitigating Risks (LFS120)",
+      issuer: "Linux Foundation",
+      date: "2025",
+      description: "Comprehensive training on conversational AI systems, compliance frameworks, and risk mitigation strategies.",
+      credentialUrl: "/images/certifications/linux-foundation-ai.jpg",
+      icon: "🤖",
+      color: "from-yellow-500 to-orange-500"
+    },
+    {
+      id: 9,
+      title: "Software Engineering Job Simulation",
+      issuer: "JP Morgan",
+      date: "2025",
+      description: "Hands-on software engineering simulation covering financial technology, system design, and enterprise development practices.",
+      credentialUrl: "/images/certifications/jpmorgan-simulation.jpg",
+      icon: "💼",
+      color: "from-blue-700 to-indigo-600"
     },
     // {
     //   id: 4,
@@ -413,11 +445,11 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
   }
 
   useEffect(() => {
-    if (!isAutoPlaying) return
+    if (!isAutoPlaying || isHovered) return
     
-    const interval = setInterval(nextSlide, 4000)
+    const interval = setInterval(nextSlide, 2000)
     return () => clearInterval(interval)
-  }, [isAutoPlaying, nextSlide])
+  }, [isAutoPlaying, isHovered, nextSlide])
 
   const visibleCertifications = (): Certification[] => {
     const result: Certification[] = []
@@ -431,12 +463,96 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
     return result
   }
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0]?.clientX || 0)
+    setIsAutoPlaying(false)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0]?.clientX || 0)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+
+    if (isLeftSwipe) {
+      nextSlide()
+    }
+    if (isRightSwipe) {
+      prevSlide()
+    }
+    setIsAutoPlaying(true)
+  }
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setMouseStart(e.clientX)
+    setIsDragging(true)
+    setIsAutoPlaying(false)
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return
+    setMouseEnd(e.clientX)
+  }
+
+  const handleMouseUp = () => {
+    if (!isDragging) {
+      setIsAutoPlaying(true)
+      return
+    }
+    
+    // Only navigate if there was actual dragging movement
+    if (mouseStart && mouseEnd) {
+      const distance = mouseStart - mouseEnd
+      const isLeftDrag = distance > 50
+      const isRightDrag = distance < -50
+
+      if (isLeftDrag) {
+        nextSlide()
+      }
+      if (isRightDrag) {
+        prevSlide()
+      }
+    }
+    
+    setIsDragging(false)
+    setIsAutoPlaying(true)
+  }
+
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+    setIsAutoPlaying(false)
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+    setIsAutoPlaying(true)
+    setIsDragging(false)
+  }
+ 
+  const truncateDescription = (text: string, maxLength: number = 80) => {
+    if (text.length <= maxLength) return text
+    return text.substring(0, maxLength).trim() + '...'
+  }
+
+  const handleCardClick = (certId: number, index: number, hasMoreContent: boolean, e: React.MouseEvent) => {
+    e.stopPropagation()
+    // Only expand if it's the center card (index 1) and has more content
+    if (index === 1 && hasMoreContent) {
+      setExpandedCard(expandedCard === certId ? null : certId)
+    }
+  }
+
   return (
     <div 
-      className="relative"
-      onMouseEnter={() => setIsAutoPlaying(false)}
-      onMouseLeave={() => setIsAutoPlaying(true)}
+      className="relative select-none"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
+      
       <div className="flex items-center justify-center gap-6 overflow-hidden">
         {/* Previous Button */}
         <button
@@ -449,16 +565,29 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
         </button>
 
         {/* Certifications */}
-        <div className="flex gap-6 min-h-[300px]">
+        <div 
+          className="flex gap-6 min-h-[300px] cursor-grab active:cursor-grabbing"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           {visibleCertifications().map((cert, index) => (
             <motion.div
               key={cert.id}
-              className={`w-80 rounded-2xl backdrop-blur-md border p-6 transition-all duration-300 ${
+              className={`w-80 h-80 rounded-2xl backdrop-blur-md border p-6 transition-all duration-300 cursor-pointer flex flex-col ${
                 isDark ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'
-              } ${index === 1 ? 'scale-105 shadow-2xl' : 'scale-95 opacity-75'}`}
+              } ${index === 1 ? 'scale-105 shadow-2xl z-20' : 'scale-95 opacity-75 z-10'} ${
+                expandedCard === cert.id ? 'h-auto' : 'h-80'
+              }`}
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: index === 1 ? 1 : 0.75, x: 0 }}
               transition={{ duration: 0.5 }}
+              onClick={(e) => handleCardClick(cert.id, index, cert.description.length > 80, e)}
+              onMouseDown={index === 1 ? (e) => e.stopPropagation() : undefined}
+              onTouchStart={index === 1 ? (e) => e.stopPropagation() : undefined}
             >
               <div className="flex items-start gap-4 mb-4">
                 <div className={`text-4xl p-3 rounded-xl bg-gradient-to-r ${cert.color}`}>
@@ -482,21 +611,39 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
                 </div>
               </div>
               
-              <p className={`text-sm mb-4 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                {cert.description}
-              </p>
+              <div className="flex-1 mb-4">
+                <p className={`text-sm ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                  {expandedCard === cert.id ? cert.description : truncateDescription(cert.description)}
+                  {cert.description.length > 80 && expandedCard !== cert.id && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setExpandedCard(cert.id)
+                      }}
+                      className={`ml-1 font-medium ${isDark ? 'text-cyan-400 hover:text-cyan-300' : 'text-blue-600 hover:text-blue-500'}`}
+                    >
+                      more
+                    </button>
+                  )}
+                </p>
+              </div>
               
               {cert.credentialUrl && (
-                <button
-                  onClick={() => cert.credentialUrl && window.open(cert.credentialUrl, '_blank')}
-                  className={`flex items-center gap-2 text-sm font-medium transition-colors ${
-                    isDark ? 'text-cyan-400 hover:text-cyan-300' : 'text-blue-600 hover:text-blue-500'
-                  }`}
-                >
-                  <Award className="w-4 h-4" />
-                  View
-                  <ExternalLink className="w-3 h-3" />
-                </button>
+                <div className="mt-auto">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      cert.credentialUrl && window.open(cert.credentialUrl, '_blank')
+                    }}
+                    className={`flex items-center gap-2 text-sm font-medium transition-colors ${
+                      isDark ? 'text-cyan-400 hover:text-cyan-300' : 'text-blue-600 hover:text-blue-500'
+                    }`}
+                  >
+                    <Award className="w-4 h-4" />
+                    View
+                    <ExternalLink className="w-3 h-3" />
+                  </button>
+                </div>
               )}
             </motion.div>
           ))}

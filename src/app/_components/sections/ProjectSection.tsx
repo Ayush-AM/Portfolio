@@ -303,8 +303,17 @@ export function ProjectsSection(): JSX.Element {
                         window.open(project.githubUrl, "_blank");
                       }}
                     >
-                      <Github className="h-4 w-4" />
-                      {"GitHub"}
+                      {project.title === "3D Portfolio Website" ? (
+                        <>
+                          <ExternalLink className="h-4 w-4" />
+                          {"Live"}
+                        </>
+                      ) : (
+                        <>
+                          <Github className="h-4 w-4" />
+                          {"GitHub"}
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>
@@ -398,8 +407,17 @@ export function ProjectsSection(): JSX.Element {
                         window.open(selectedProject.githubUrl, "_blank")
                       }
                     >
-                      <Github className="h-5 w-5" />
-                      {"View Source"}
+                      {selectedProject.title === "3D Portfolio Website" ? (
+                        <>
+                          <ExternalLink className="h-5 w-5" />
+                          {"View Live"}
+                        </>
+                      ) : (
+                        <>
+                          <Github className="h-5 w-5" />
+                          {"View Source"}
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>
