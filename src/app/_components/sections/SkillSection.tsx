@@ -464,12 +464,12 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
   }
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart(e.targetTouches[0]?.clientX || 0)
+    setTouchStart(e.targetTouches[0]?.clientX ?? 0)
     setIsAutoPlaying(false)
   }
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0]?.clientX || 0)
+    setTouchEnd(e.targetTouches[0]?.clientX ?? 0)
   }
 
   const handleTouchEnd = () => {
@@ -533,7 +533,7 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
     setIsDragging(false)
   }
  
-  const truncateDescription = (text: string, maxLength: number = 80) => {
+  const truncateDescription = (text: string, maxLength = 80) => {
     if (text.length <= maxLength) return text
     return text.substring(0, maxLength).trim() + '...'
   }
@@ -633,7 +633,9 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
                   <button
                     onClick={(e) => {
                       e.stopPropagation()
-                      cert.credentialUrl && window.open(cert.credentialUrl, '_blank')
+                      if (cert.credentialUrl) {
+                        window.open(cert.credentialUrl, '_blank')
+                      }
                     }}
                     className={`flex items-center gap-2 text-sm font-medium transition-colors ${
                       isDark ? 'text-cyan-400 hover:text-cyan-300' : 'text-blue-600 hover:text-blue-500'
