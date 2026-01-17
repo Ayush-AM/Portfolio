@@ -48,7 +48,7 @@ export function BackgroundMusic(): JSX.Element {
           isDark
             ? 'bg-white/10 border-white/20 text-white hover:bg-white/20'
             : 'bg-black/10 border-black/20 text-black hover:bg-black/20'
-        } ${isPlaying ? 'ring-2 ring-cyan-400/50' : ''}`}
+        } ${isPlaying ? 'ring-2 ring-primary/50' : ''}`}
         onClick={() => setShowControls(!showControls)}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
@@ -56,12 +56,12 @@ export function BackgroundMusic(): JSX.Element {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 2 }}
       >
-        <Music className={`w-6 h-6 ${isPlaying ? 'text-cyan-400' : ''}`} />
+        <Music className={`w-6 h-6 ${isPlaying ? 'text-primary' : ''}`} />
         
         {/* Playing Indicator */}
         {isPlaying && (
           <motion.div
-            className="absolute -top-1 -right-1 w-3 h-3 bg-cyan-400 rounded-full"
+            className="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full"
             animate={{ scale: [1, 1.2, 1] }}
             transition={{ duration: 1, repeat: Infinity }}
           />
@@ -99,7 +99,7 @@ export function BackgroundMusic(): JSX.Element {
                   onClick={togglePlay}
                   className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
                     isPlaying
-                      ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white'
+                      ? 'bg-gradient-to-r from-primary to-secondary text-white'
                       : isDark
                       ? 'bg-white/20 text-white hover:bg-white/30'
                       : 'bg-black/20 text-black hover:bg-black/30'
@@ -144,7 +144,7 @@ export function BackgroundMusic(): JSX.Element {
                     isDark ? 'bg-gray-700' : 'bg-gray-300'
                   }`}
                   style={{
-                    background: `linear-gradient(to right, #06b6d4 0%, #8b5cf6 ${volume * 100}%, ${
+                    background: `linear-gradient(to right, var(--color-primary) 0%, var(--color-secondary) ${volume * 100}%, ${
                       isDark ? '#374151' : '#d1d5db'
                     } ${volume * 100}%, ${isDark ? '#374151' : '#d1d5db'} 100%)`,
                   }}

@@ -74,7 +74,7 @@ export function ContactSection(): JSX.Element {
         >
           <h2 className={`text-5xl md:text-6xl font-bold mb-6 ${isDark ? 'text-white' : 'text-black'}`}>
             {'Get In '}
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               {'Touch'}
             </span>
           </h2>
@@ -116,9 +116,9 @@ export function ContactSection(): JSX.Element {
                   required
                   className={`w-full px-4 py-3 rounded-lg outline-none transition-all duration-300 ${
                     isDark 
-                      ? 'bg-white/10 text-white border-white/10 focus:border-cyan-500' 
-                      : 'bg-black/5 text-black border-black/10 focus:border-purple-500'
-                  } border focus:ring-2 ${isDark ? 'focus:ring-cyan-500/20' : 'focus:ring-purple-500/20'}`}
+                      ? 'bg-white/10 text-white border-white/10 focus:border-primary' 
+                      : 'bg-black/5 text-black border-black/10 focus:border-primary'
+                  } border focus:ring-2 focus:ring-primary/20`}
                   placeholder="Ayush Mahajan"
                 />
               </div>
@@ -139,9 +139,9 @@ export function ContactSection(): JSX.Element {
                   required
                   className={`w-full px-4 py-3 rounded-lg outline-none transition-all duration-300 ${
                     isDark 
-                      ? 'bg-white/10 text-white border-white/10 focus:border-cyan-500' 
-                      : 'bg-black/5 text-black border-black/10 focus:border-purple-500'
-                  } border focus:ring-2 ${isDark ? 'focus:ring-cyan-500/20' : 'focus:ring-purple-500/20'}`}
+                      ? 'bg-white/10 text-white border-white/10 focus:border-primary' 
+                      : 'bg-black/5 text-black border-black/10 focus:border-primary'
+                  } border focus:ring-2 focus:ring-primary/20`}
                   placeholder="ayush@example.com"
                 />
               </div>
@@ -162,9 +162,9 @@ export function ContactSection(): JSX.Element {
                   required
                   className={`w-full px-4 py-3 rounded-lg outline-none transition-all duration-300 ${
                     isDark 
-                      ? 'bg-white/10 text-white border-white/10 focus:border-cyan-500' 
-                      : 'bg-black/5 text-black border-black/10 focus:border-purple-500'
-                  } border focus:ring-2 ${isDark ? 'focus:ring-cyan-500/20' : 'focus:ring-purple-500/20'}`}
+                      ? 'bg-white/10 text-white border-white/10 focus:border-primary' 
+                      : 'bg-black/5 text-black border-black/10 focus:border-primary'
+                  } border focus:ring-2 focus:ring-primary/20`}
                   placeholder="Inquiry"
                 />
               </div>
@@ -185,9 +185,9 @@ export function ContactSection(): JSX.Element {
                   rows={5}
                   className={`w-full px-4 py-3 rounded-lg outline-none transition-all duration-300 ${
                     isDark 
-                      ? 'bg-white/10 text-white border-white/10 focus:border-cyan-500' 
-                      : 'bg-black/5 text-black border-black/10 focus:border-purple-500'
-                  } border focus:ring-2 ${isDark ? 'focus:ring-cyan-500/20' : 'focus:ring-purple-500/20'}`}
+                      ? 'bg-white/10 text-white border-white/10 focus:border-primary' 
+                      : 'bg-black/5 text-black border-black/10 focus:border-primary'
+                  } border focus:ring-2 focus:ring-primary/20`}
                   placeholder="I'd like to discuss...."
                 />
               </div>
@@ -198,7 +198,7 @@ export function ContactSection(): JSX.Element {
                 className={` cursor-pointer w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-white font-medium transition-all duration-300 ${
                   isSubmitting 
                     ? 'bg-gray-500 cursor-not-allowed' 
-                    : 'bg-gradient-to-r from-cyan-500 to-purple-600 hover:shadow-lg'
+                    : 'bg-gradient-to-r from-primary to-secondary hover:shadow-lg'
                 }`}
               >
                 {isSubmitting ? (
@@ -276,7 +276,7 @@ export function ContactSection(): JSX.Element {
                 
                 <div className="flex items-start gap-4">
                   <div className={`p-3 rounded-full ${isDark ? 'bg-white/10' : 'bg-black/10'}`}>
-                    <Phone className={`w-6 h-6 ${isDark ? 'text-cyan-400' : 'text-purple-600'}`} />
+                    <Phone className="w-6 h-6 text-primary" />
                   </div>
                   <div>
                     <h4 className={`text-lg font-medium ${isDark ? 'text-white' : 'text-black'}`}>{'Phone'}</h4>
@@ -291,7 +291,7 @@ export function ContactSection(): JSX.Element {
                 
                 <div className="flex items-start gap-4">
                   <div className={`p-3 rounded-full ${isDark ? 'bg-white/10' : 'bg-black/10'}`}>
-                    <MapPin className={`w-6 h-6 ${isDark ? 'text-cyan-400' : 'text-purple-600'}`} />
+                    <MapPin className="w-6 h-6 text-primary" />
                   </div>
                   <div>
                     <h4 className={`text-lg font-medium ${isDark ? 'text-white' : 'text-black'}`}>{'Location'}</h4>

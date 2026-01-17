@@ -25,6 +25,7 @@ export function ProjectsSection(): JSX.Element {
   const [filter, setFilter] = useState<string>("all");
 
   const projects: Project[] = [
+    // --- Original Projects ---
     {
       id: 1,
       title: "3D Portfolio Website",
@@ -39,22 +40,8 @@ export function ProjectsSection(): JSX.Element {
       category: "3d",
       featured: true,
     },
-    // {
-    //   id: 2,
-    //   title: "E-Commerce Platform",
-    //   description:
-    //     "Full-stack e-commerce solution with real-time inventory and payment processing.",
-    //   longDescription:
-    //     "A comprehensive e-commerce platform built with Next.js and Node.js. Features include real-time inventory management, secure payment processing, user authentication, and an admin dashboard. Deployed on AWS with CI/CD pipeline.",
-    //   technologies: ["Next.js", "Node.js", "PostgreSQL", "Stripe", "AWS"],
-    //   image: "/images/projects/ecommerce.svg",
-    //   demoUrl: "#",
-    //   githubUrl: "#",
-    //   category: "web",
-    //   featured: true,
-    // },
     {
-      id: 3,
+      id: 2,
       title: "AI Reply for WhatsApp",
       description:
         "A WhatsApp automation tool that leverages Google’s Gemini AI for contextual replies.",
@@ -73,50 +60,8 @@ export function ProjectsSection(): JSX.Element {
       category: "ai",
       featured: false,
     },
-    // {
-    //   id: 4,
-    //   title: "Mobile Fitness App",
-    //   description:
-    //     "Cross-platform fitness tracking app with social features and gamification.",
-    //   longDescription:
-    //     "A comprehensive fitness tracking application built with React Native. Features include workout planning, progress tracking, social challenges, and integration with wearable devices. Uses Firebase for real-time data synchronization.",
-    //   technologies: ["React Native", "Firebase", "Redux", "Expo", "TypeScript"],
-    //   image: "/images/projects/fitness-app.svg",
-    //   demoUrl: "#",
-    //   githubUrl: "#",
-    //   category: "mobile",
-    //   featured: false,
-    // },
-    // {
-    //   id: 5,
-    //   title: "VR Data Visualization",
-    //   description:
-    //     "Immersive VR experience for exploring complex datasets in 3D space.",
-    //   longDescription:
-    //     "A virtual reality application for data visualization built with Unity and C#. Allows users to explore complex datasets in an immersive 3D environment with hand tracking and voice commands. Supports multiple VR headsets.",
-    //   technologies: ["Unity", "C#", "WebXR", "Three.js", "A-Frame"],
-    //   image: "/images/projects/vr-data.svg",
-    //   demoUrl: "#",
-    //   githubUrl: "#",
-    //   category: "3d",
-    //   featured: true,
-    // },
-    // {
-    //   id: 6,
-    //   title: "Blockchain DApp",
-    //   description:
-    //     "Decentralized application for NFT marketplace with smart contracts.",
-    //   longDescription:
-    //     "A decentralized NFT marketplace built on Ethereum blockchain. Features include minting, buying, selling NFTs, and royalty distribution. Smart contracts written in Solidity with comprehensive testing and security audits.",
-    //   technologies: ["Solidity", "Web3.js", "React", "IPFS", "Ethereum"],
-    //   image: "/images/projects/blockchain.svg",
-    //   demoUrl: "#",
-    //   githubUrl: "#",
-    //   category: "web",
-    //   featured: false,
-    // },
     {
-      id: 6,
+      id: 3,
       title: "ESP32 RF Drone",
       description: "Manual RC drone with custom ESP32-based RF control system.",
       longDescription:
@@ -135,15 +80,81 @@ export function ProjectsSection(): JSX.Element {
       category: "iot",
       featured: false,
     },
+
+    // --- New Projects from GitHub ---
+    {
+      id: 4,
+      title: "Zenith X 3D Website",
+      description: "Immersive 3D headphone showcase with scroll animations.",
+      longDescription:
+        "A high-performance 3D landing page for Zenith headphones. Features smooth scroll-linked animations, interactive 3D models using React Three Fiber, and a modern dark aesthetic. Designed to provide a premium user experience.",
+      technologies: ["Next.js", "React Three Fiber", "GSAP", "Tailwind CSS"],
+      image: "/images/projects/zenith.png",
+      demoUrl: "https://zenith-3d.vercel.app",
+      githubUrl: "https://github.com/Ayush-AM/Zenith-3d",
+      category: "3d",
+      featured: true,
+    },
+    {
+      id: 6,
+      title: "Stationary-X",
+      description: "Mobile app for ordering stationery with instant printing.",
+      longDescription:
+        "A comprehensive React Native mobile application that streamlines stationery shopping. Users can order items, upload documents for instant printing, and schedule deliveries. Features a user-friendly interface and real-time order tracking.",
+      technologies: ["React Native", "Expo", "TypeScript", "React Navigation"],
+      image: "/images/projects/stationary-x.png",
+      demoUrl: "",
+      githubUrl: "https://github.com/Ayush-AM/Stationary-X",
+      category: "mobile",
+      featured: false,
+    },
+    {
+      id: 7,
+      title: "Used Car Price Predictor",
+      description: "ML model to estimate used car prices in the Indian market.",
+      longDescription:
+        "A machine learning application that predicts the market value of used cars based on depreciation factors like fuel type, transmission, and owner history. Powered by a Random Forest Regressor for high accuracy.",
+      technologies: ["Python", "Flask", "Scikit-learn", "HTML/CSS"],
+      image: "/images/projects/car-price.png",
+      demoUrl: "",
+      githubUrl: "https://github.com/Ayush-AM/Car-Prediction-Model-",
+      category: "ai",
+      featured: false,
+    },
+    {
+      id: 8,
+      title: "YT Transcripter AI",
+      description: "Chat with YouTube videos using Gemini AI.",
+      longDescription:
+        "An intelligent tool that extracts transcripts from YouTube videos and enables users to have a conversational Q&A about the content. Leverages Google's Gemini AI to summarize and explain video details.",
+      technologies: ["Python", "Flask", "Google Gemini AI", "YouTube API"],
+      image: "/images/projects/yt-transcripter.png",
+      demoUrl: "",
+      githubUrl: "https://github.com/Ayush-AM/YT-Transcripter",
+      category: "ai",
+      featured: false,
+    },
+    {
+      id: 9,
+      title: "MovieView Platform",
+      description: "Movie discovery and recommendation web application.",
+      longDescription:
+        "A dynamic movie database interface where users can search for titles, browse trending movies, and view detailed information. Built with React for a responsive and fast user experience.",
+      technologies: ["React", "React Router", "CSS", "TMDB API"],
+      image: "/images/projects/movie-view.png",
+      demoUrl: "",
+      githubUrl: "https://github.com/Ayush-AM/MovieView",
+      category: "web",
+      featured: false,
+    },
   ];
 
   const categories = [
     { id: "all", label: "All Projects" },
-    // { id: "web", label: "Web Apps" },
+    { id: "web", label: "Web Apps" },
     { id: "3d", label: "3D & VR" },
-    // { id: "mobile", label: "Mobile" },
+    { id: "mobile", label: "Mobile" },
     { id: "ai", label: "AI & ML" },
-    { id: "iot", label: "IOT" },
   ];
 
   const filteredProjects =
@@ -166,7 +177,7 @@ export function ProjectsSection(): JSX.Element {
             className={`mb-6 text-5xl font-bold md:text-6xl ${isDark ? "text-white" : "text-black"}`}
           >
             {"My "}
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               {"Projects"}
             </span>
           </h2>
@@ -192,7 +203,7 @@ export function ProjectsSection(): JSX.Element {
               onClick={() => setFilter(category.id)}
               className={`rounded-full px-6 py-3 font-medium transition-all duration-300 ${
                 filter === category.id
-                  ? "bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-lg"
+                  ? "bg-gradient-to-r from-primary to-secondary text-white shadow-lg"
                   : isDark
                     ? "bg-white/10 text-white hover:bg-white/20"
                     : "bg-black/10 text-black hover:bg-black/20"
@@ -234,7 +245,7 @@ export function ProjectsSection(): JSX.Element {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                   {project.featured && (
-                    <div className="absolute top-4 right-4 rounded-full bg-cyan-500 px-3 py-1 text-xs font-bold text-white">
+                    <div className="absolute top-4 right-4 rounded-full bg-primary px-3 py-1 text-xs font-bold text-white">
                       {"Featured"}
                     </div>
                   )}
@@ -280,20 +291,9 @@ export function ProjectsSection(): JSX.Element {
                     )}
                   </div>
 
-                  {/* Action Buttons */}
                   <div className="flex gap-2">
-                    {/* <button
-                      className="flex flex-1 items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-600 px-4 py-2 text-white transition-all duration-300 hover:shadow-lg"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        window.open(project.demoUrl, "_blank");
-                      }}
-                    >
-                      <Play className="h-4 w-4" />
-                      {"Demo"}
-                    </button> */}
                     <button
-                      className={`flex flex-1 items-center justify-center gap-2 rounded-lg border px-4 py-2 transition-all duration-300 ${
+                      className={`cursor-pointer flex flex-1 items-center justify-center gap-2 rounded-lg border px-4 py-2 transition-all duration-300 ${
                         isDark
                           ? "border-white/20 text-white hover:bg-white/10"
                           : "border-black/20 text-black hover:bg-black/10"
@@ -303,17 +303,8 @@ export function ProjectsSection(): JSX.Element {
                         window.open(project.githubUrl, "_blank");
                       }}
                     >
-                      {project.title === "3D Portfolio Website" ? (
-                        <>
-                          <ExternalLink className="h-4 w-4" />
-                          {"Live"}
-                        </>
-                      ) : (
-                        <>
-                          <Github className="h-4 w-4" />
-                          {"GitHub"}
-                        </>
-                      )}
+                      <Github className="h-4 w-4" />
+                      {"GitHub"}
                     </button>
                   </div>
                 </div>
@@ -388,17 +379,8 @@ export function ProjectsSection(): JSX.Element {
                   </div>
 
                   <div className="flex gap-4">
-                    {/* <button
-                      className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-600 px-6 py-3 text-white transition-all duration-300 hover:shadow-lg"
-                      onClick={() =>
-                        window.open(selectedProject.demoUrl, "_blank")
-                      }
-                    >
-                      <ExternalLink className="h-5 w-5" />
-                      {"View Live Demo"}
-                    </button> */}
                     <button
-                      className={`flex items-center gap-2 rounded-lg border px-6 py-3 transition-all duration-300 ${
+                      className={`cursor-pointer flex items-center gap-2 rounded-lg border px-6 py-3 transition-all duration-300 ${
                         isDark
                           ? "border-white/20 text-white hover:bg-white/10"
                           : "border-black/20 text-black hover:bg-black/10"
@@ -407,17 +389,8 @@ export function ProjectsSection(): JSX.Element {
                         window.open(selectedProject.githubUrl, "_blank")
                       }
                     >
-                      {selectedProject.title === "3D Portfolio Website" ? (
-                        <>
-                          <ExternalLink className="h-5 w-5" />
-                          {"View Live"}
-                        </>
-                      ) : (
-                        <>
-                          <Github className="h-5 w-5" />
-                          {"View Source"}
-                        </>
-                      )}
+                      <Github className="h-5 w-5" />
+                      {"View Source"}
                     </button>
                   </div>
                 </div>

@@ -62,7 +62,7 @@ export function AboutSection(): JSX.Element {
         >
           <h2 className={`text-5xl md:text-6xl font-bold mb-6 ${isDark ? 'text-white' : 'text-black'}`}>
             {'About '}  
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               {'Me'}
             </span>
           </h2>
@@ -110,7 +110,7 @@ export function AboutSection(): JSX.Element {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <div className={`text-3xl font-bold mb-1 bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent`}>
+                  <div className="text-3xl font-bold mb-1 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                     {stat.value}
                   </div>
                   <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
@@ -139,7 +139,7 @@ export function AboutSection(): JSX.Element {
                 viewport={{ once: true }}
                 whileHover={{ y: -5 }}
               >
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-cyan-500 to-purple-600 flex items-center justify-center mb-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-primary to-secondary flex items-center justify-center mb-4">
                   <feature.icon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className={`text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-black'}`}>

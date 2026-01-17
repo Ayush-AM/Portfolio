@@ -115,7 +115,7 @@ export function SkillsSection(): JSX.Element {
         >
           <h2 className={`text-5xl md:text-6xl font-bold mb-6 ${isDark ? 'text-white' : 'text-black'}`}>
             {'My '}
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               {'Skills'}
             </span>
           </h2>
@@ -139,7 +139,7 @@ export function SkillsSection(): JSX.Element {
               onClick={() => setActiveCategory(category.id)}
               className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
                 activeCategory === category.id
-                  ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-lg'
+                  ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg'
                   : isDark
                   ? 'bg-white/10 text-white hover:bg-white/20'
                   : 'bg-black/10 text-black hover:bg-black/20'
@@ -191,7 +191,7 @@ export function SkillsSection(): JSX.Element {
               <div className="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                 <motion.div
                   key={`${skill.name}-${activeCategory}`}
-                  className="h-full bg-gradient-to-r from-cyan-500 to-purple-600"
+                  className="h-full bg-gradient-to-r from-primary to-secondary"
                   initial={{ width: 0 }}
                   animate={{ width: isInView ? `${skill.level}%` : 0 }}
                   transition={{ duration: 1.5, delay: 0.3 }}
@@ -253,7 +253,7 @@ export function SkillsSection(): JSX.Element {
         >
           <h3 className={`text-3xl md:text-4xl font-bold text-center mb-12 ${isDark ? 'text-white' : 'text-black'}`}>
             {'Certifications & '}
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               {'Achievements'}
             </span>
           </h3>
@@ -324,6 +324,16 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
   const [expandedCard, setExpandedCard] = useState<number | null>(null)
 
   const certifications: Certification[] = [
+    {
+      id: 10,
+      title: "Introduction to Generative AI Studio",
+      issuer: "Simplilearn",
+      date: "2026",
+      description: "Comprehensive course on Generative AI Studio, covering fundamental concepts and practical applications powered by Google Cloud.",
+      credentialUrl: "/images/certifications/intro-generative-ai.png",
+      icon: "🤖",
+      color: "from-blue-500 to-cyan-400"
+    },
     {
       id: 1,
       title: "Oracle Certified AI Professional",
@@ -670,7 +680,7 @@ function CertificationSlider({ isDark }: { isDark: boolean }) {
             onClick={() => setCurrentIndex(index)}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
               index === currentIndex
-                ? 'bg-gradient-to-r from-cyan-500 to-purple-600 w-8'
+                ? 'bg-gradient-to-r from-primary to-secondary w-8'
                 : isDark ? 'bg-white/30' : 'bg-black/30'
             }`}
           />

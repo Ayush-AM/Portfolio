@@ -35,7 +35,7 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.8 }}
         >
           <span
-            className={`text-lg font-medium ${isDark ? "text-cyan-400" : "text-blue-600"}`}
+            className="text-lg font-medium text-primary"
           >
             {"Hello, I'm"}
           </span>
@@ -44,11 +44,42 @@ export function HeroSection() {
         {/* Main Name */}
         <motion.h1
           className={`mb-4 text-6xl font-bold md:text-8xl ${isDark ? "text-white" : "text-black"}`}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1 }}
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.1,
+                delayChildren: 1
+              }
+            }
+          }}
         >
-          Ayush
+          {Array.from("Ayush").map((char, index) => (
+            <motion.span
+              key={index}
+              className="inline-block hover:text-primary transition-colors duration-300"
+              variants={{
+                hidden: { opacity: 0, y: 50, rotateX: -90 },
+                visible: { 
+                  opacity: 1, 
+                  y: 0, 
+                  rotateX: 0,
+                  transition: { type: "spring", damping: 12, stiffness: 100 } 
+                }
+              }}
+              whileHover={{ 
+                scale: 1.2, 
+                rotate: 5, 
+                color: "var(--color-primary)",
+                transition: { duration: 0.2 } 
+              }}
+            >
+              {char}
+            </motion.span>
+          ))}
         </motion.h1>
 
         {/* Profession */}
@@ -115,7 +146,7 @@ export function HeroSection() {
           whileTap={{ scale: 0.9 }}
         >
           <ChevronDown
-            className={`h-7 w-8 cursor-pointer ${isDark ? "text-cyan-600" : "text-blue-600 "}`}
+            className="h-7 w-8 cursor-pointer text-secondary"
           />
         </motion.button>
       </motion.div>

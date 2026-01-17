@@ -64,7 +64,7 @@ export function Navigation({ currentSection, setCurrentSection }: NavigationProp
               }}
               className={`relative w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 group ${
                 isActive
-                  ? 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-lg'
+                  ? 'bg-gradient-to-r from-primary to-secondary text-white shadow-lg'
                   : isDark
                   ? 'bg-white/10 text-white hover:bg-white/20'
                   : 'bg-black/10 text-black hover:bg-black/20'
@@ -96,9 +96,7 @@ export function Navigation({ currentSection, setCurrentSection }: NavigationProp
       {/* Active Section Indicator */}
       <div className="mt-4 pt-3 border-t border-white/20">
         <div className="flex justify-center">
-          <div className={`w-2 h-2 rounded-full ${
-            isDark ? 'bg-cyan-400' : 'bg-blue-500'
-          }`} />
+          <div className="w-2 h-2 rounded-full bg-secondary" />
         </div>
         <div className={`text-xs text-center mt-1 ${
           isDark ? 'text-gray-400' : 'text-gray-600'
