@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json() as { name: string; email: string; subject: string; message: string }
     const { name, email, subject, message } = body
 
-    console.log('Contact form submission:', { name, email, subject, message })
+
 
     if (!process.env.GMAIL_APP_PASSWORD || !process.env.GMAIL_EMAIL) {
       console.error('Gmail credentials not found in environment variables')
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true })
   } catch (error: unknown) {
     console.error('Email error:', error)
-    return NextResponse.json({ 
+    return NextResponse.json({
       error: 'Failed to send email',
       details: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 })
